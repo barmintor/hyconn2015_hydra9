@@ -36,10 +36,6 @@ GEM
       deprecation (~> 0.1)
       linkeddata (~> 1.1)
       rdf (~> 1.1)
-    activefedora-aggregation (0.4.1)
-      active-fedora
-      activesupport
-      rdf-vocab (~> 0.8.1)
     activejob (4.2.1)
       activesupport (= 4.2.1)
       globalid (>= 0.3.0)
@@ -157,9 +153,6 @@ GEM
       hydra-access-controls (= 9.1.4)
       hydra-core (= 9.1.4)
       rails (>= 3.2.6)
-    hydra-pcdm (0.1.0)
-      activefedora-aggregation (~> 0.4)
-      mime-types (>= 1)
     i18n (0.7.0)
     jbuilder (2.3.1)
       activesupport (>= 3.0.0, < 5)
@@ -424,7 +417,6 @@ DEPENDENCIES
   devise-guests (~> 0.3)
   fedora-migrate
   hydra (= 9.1.0.rc1)
-  hydra-pcdm (~> 0.1)
   jbuilder (~> 2.0)
   jettywrapper
   jquery-rails

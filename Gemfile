@@ -5,7 +5,6 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.1'
 
 gem 'hydra', '9.1.0.rc1'
-gem 'hydra-pcdm', '~> 0.1'
 gem 'fedora-migrate'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
