@@ -34,20 +34,28 @@ module FedoraMigrate::Hooks
   end
 
 end
-module FedoraMigrate::DatastreamVerification
-  def xhas_matching_checksums?
-    source_checksum = datastream.checksum || checksum(datastream.content)
-    puts "source: #{datastream.checksum} target: #{target_checksum} fallback: #{!!datastream.checksum}"
-    puts "target digest: #{target.digest.inspect}"
-    source_checksum == target_checksum
-  end
-end
+
 ActiveFedora::File.class_eval do
   def digest
     response = metadata.ldp_source.graph.query(predicate: RDF::Vocab::PREMIS.hasMessageDigest)
     # fallback on old predicate for checksum
     response = metadata.ldp_source.graph.query(predicate: RDF::Vocab::Fcrepo4.digest) if response.empty?
     response.map(&:object)
+  end
+end
+FedoraMigrate::RelsExtDatastreamMover.class_eval do
+  def migrate_object(fc3_uri)
+    if (fc3_uri.to_s =~ /^info:fedora\/.+:.+/)
+      RDF::URI.new(ActiveFedora::Base.id_to_uri(id_component(fc3_uri)))
+    else
+      RDF::URI.new(fc3_uri)
+    end
+  end
+  def has_missing_object?(statement)
+    return false unless (statement.object.to_s =~ /^info:fedora\/.+:.+/)
+    return false if ActiveFedora::Base.exists?(id_component(statement.object))
+    report << "could not migrate relationship #{statement.predicate} because #{statement.object} doesn't exist in Fedora 4"
+    true
   end
 end
 desc "Delete all the content in Fedora 4"
