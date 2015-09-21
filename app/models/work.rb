@@ -6,4 +6,7 @@ class Work < ActiveFedora::Base
     predicate: Hydra::PCDM::Vocab::PCDMTerms['memberOf'], inverse_of: Hydra::PCDM::Vocab::PCDMTerms['hasMember']
   contains "descMetadata", autocreate: false, class_name: 'ActiveFedora::File'
   contains "structMetadata", autocreate: false, class_name: 'ActiveFedora::File'
+  property :seeAlso, predicate: ::RDF::RDFS.seeAlso do |index|
+    index.as :stored_sortable, :facetable
+  end
 end

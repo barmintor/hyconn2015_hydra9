@@ -68,9 +68,9 @@ task migrate: :environment do
   GenericFile.name
   Collection.name
   AdministrativeSet.name
-  hyconn = FedoraMigrate.migrate_repository(namespace: "hyconn",options:{})
+  hyconn = FedoraMigrate.migrate_repository(namespace: "hyconn",options: {convert: "descMetadata"})
 
-  archives = FedoraMigrate.migrate_repository(namespace: "archives",options:{})
+  archives = FedoraMigrate.migrate_repository(namespace: "archives",options: {convert: "descMetadata"})
   report = FedoraMigrate::MigrationReport.new
   report.results.merge! hyconn.report.results
   report.results.merge! archives.report.results
